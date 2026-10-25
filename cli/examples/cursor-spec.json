@@ -1,0 +1,9 @@
+{
+  "name": "Xscriptor-X-example",
+  "gradient": ["#4328a8", "#7c3aed", "#4d96ff", "#ff9f43", "#f59e0b"],
+  "rim": "#ffe884",
+  "contour": "#171717",
+  "sizes": [24, 32, 48],
+  "comment": "Example palette variant built with cursors-cli",
+  "website": "https://github.com/xscriptor-colors/cursors"
+}

@@ -18,6 +18,9 @@
 
 <hr />
 
+> **New here?** Read the [manual](MANUAL.md) for platform-specific installation,
+> customization and troubleshooting.
+
 ## Preview
 
 ### Xscriptor-X
@@ -66,6 +69,9 @@ Both packs share the same geometry and hotspots. The only animated cursors are
 | Berlin contour | `#000000` |
 
 ## Install
+
+For Hyprland, GNOME, KDE, Xfce, X11, GTK, Qt, Electron and Flatpak notes, see
+the [manual](MANUAL.md).
 
 ### Quick install
 
@@ -150,6 +156,7 @@ scripts/     artwork, catalogue, generators and validation
 src/x/       Xscriptor-X SVG sources (generated, committed)
 src/berlin/  Xscriptor-Berlin SVG sources (generated, committed)
 docs/        preview images used by this README
+MANUAL.md    installation, usage, customization and troubleshooting guide
 build/       generated PNGs, manifests and Xcursor themes (ignored)
 preview/     full contact sheets (ignored)
 Makefile     local pipeline

@@ -307,7 +307,9 @@ is required.
 
 ### Change the palette
 
-Open `scripts/art.py` and edit `PALETTES`:
+For a one-off variant that should not touch the committed sources, use
+[`cursors-cli`](#palette-variants-cursors-cli) instead. To change the default X
+and Berlin packs, open `scripts/art.py` and edit `PALETTES`:
 
 ```python
 PALETTES = {
@@ -418,6 +420,67 @@ build/themes/<theme>/       Xcursor themes ready to install
 
 `build/` is not committed; it is fully reproducible from `src/`.
 
+### Palette variants (`cursors-cli`)
+
+`cli/` is a self-contained builder for palette-specific themes. It never
+modifies `src/`: every intermediate file goes to a temporary directory and the
+final theme is published atomically to `--out-dir`. Variants use the **X**
+pack only; Berlin is monochrome and is installed once.
+
+```bash
+python3 cli/cursors-cli \
+  --spec cli/examples/cursor-spec.json \
+  --out-dir build/variants \
+  --sizes 24 32 48
+```
+
+The spec is deliberately small:
+
+```json
+{
+  "name": "Xscriptor-X-berlin",
+  "gradient": ["#0a0a0a", "#4d96ff", "#ff9f43", "#f59e0b", "#fce566"],
+  "rim": "#ffe884",
+  "contour": "#171717",
+  "sizes": [24, 32, 48]
+}
+```
+
+Only `gradient` (exactly five `#rrggbb` colours) is required. The five colours
+map to the 0%, 28%, 52%, 76% and 100% stops. `name`, `rim`,
+`contour`, `sizes`, `comment` and `website` are optional. If `name` is
+omitted, the CLI derives a stable name from the colours and sizes
+(`Xscriptor-X-<hash8>`). Defaults are `rim=#ffe884`, `contour=#171717` and
+`sizes=[24, 32, 48]`.
+
+| Flag | Meaning |
+|------|---------|
+| `--spec FILE` | Palette spec JSON (required) |
+| `--out-dir DIR` | Where the built theme is published (default `build/variants`) |
+| `--sizes PX...` | Override the spec sizes |
+| `--name NAME` | Override the spec theme name |
+| `--force` | Replace an existing output theme |
+| `--dry-run` | Validate the spec and print metadata without building |
+| `--work-dir DIR` | Parent directory for the temporary build |
+| `--keep-work` | Keep the intermediate SVGs/PNGs/manifest |
+| `--quiet` | Suppress progress messages (JSON only) |
+
+The command prints one JSON object to stdout and progress messages to stderr:
+
+```json
+{"theme":"Xscriptor-X-berlin","path":"/abs/...","sizes":[24,32,48],
+ "design_version":"...","spec_hash":"...","cursors":78,"entries":179,
+ "bytes":1577427,"dry_run":false,"build_seconds":0.43}
+```
+
+Exit codes: `2` invalid spec, `3` missing `ctgen`/`rsvg-convert`, `4` build
+failure, `5` output exists without `--force`.
+
+This is the contract for theme-sync: write a spec, call the CLI, cache the
+result by `design_version` + `spec_hash` + sizes, and switch the active theme
+with `hyprctl setcursor` / `gsettings`. The CLI does not touch the running
+session or the user's configuration.
+
 ## 8. Validation
 
 Run:
@@ -434,6 +497,9 @@ The validator checks:
 - that every hotspot is inside its bitmap,
 - that `wait` and `left_ptr_watch` really contain multiple frames,
 - that every theme has `index.theme`, `cursor.theme` and no broken symlinks.
+
+Run `make test-cli` to check the palette-spec parser and manifest contract
+without building a theme.
 
 A successful run ends with:
 

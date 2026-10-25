@@ -149,9 +149,44 @@ make clean      # remove build/ and preview/
 The generated binaries are not committed. The SVG sources in `src/` are the
 single source of truth; `build/themes` is reproducible from them.
 
+### Palette variants (`cursors-cli`)
+
+`cli/` contains a self-contained CLI that builds a theme from a palette spec
+without touching the curated `src/` tree. It is the integration surface for
+theme-sync or any other orchestrator. Variants use the **X** pack; Berlin is
+monochrome and is installed once.
+
+```bash
+python3 cli/cursors-cli --spec cli/examples/cursor-spec.json --out-dir build/variants
+# or:
+make variant SPEC=cli/examples/cursor-spec.json OUT=build/variants SIZES="24 32 48"
+```
+
+Spec:
+
+```json
+{
+  "name": "Xscriptor-X-berlin",
+  "gradient": ["#0a0a0a", "#4d96ff", "#ff9f43", "#f59e0b", "#fce566"],
+  "rim": "#ffe884",
+  "contour": "#171717",
+  "sizes": [24, 32, 48]
+}
+```
+
+The five gradient colours map to the 0%, 28%, 52%, 76% and 100% stops.
+`name`, `rim`, `contour` and `sizes` are optional. Intermediate SVG/PNG files
+stay in a temporary directory; the final theme is published atomically to
+`--out-dir`. The command prints one JSON object with `theme`, `path`, `sizes`,
+`design_version`, `spec_hash`, `cursors`, `entries` and `bytes`.
+
+Exit codes: `2` invalid spec, `3` missing tools, `4` build failure, `5` output
+exists without `--force`.
+
 ## Repository layout
 
 ```
+cli/         palette-variant CLI (cursors-cli)
 scripts/     artwork, catalogue, generators and validation
 src/x/       Xscriptor-X SVG sources (generated, committed)
 src/berlin/  Xscriptor-Berlin SVG sources (generated, committed)
@@ -172,6 +207,15 @@ Makefile     local pipeline
 | `scripts/build.py` | SVG → PNG → clickgen manifest → `ctgen` |
 | `scripts/preview.py` | Contact sheets and README previews |
 | `scripts/validate.py` | Coverage, Xcursor format, hotspots and animation checks |
+
+## CLI
+
+| Path | Purpose |
+|------|---------|
+| `cli/cursors-cli` | Executable wrapper (`--spec`, `--out-dir`, `--sizes`, `--dry-run`) |
+| `cli/cursors_cli/` | Spec validation and variant build pipeline |
+| `cli/examples/cursor-spec.json` | Example palette spec |
+| `cli/tests/` | Unit tests (`make test-cli`) |
 
 ## Design notes
 

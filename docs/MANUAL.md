@@ -3,6 +3,10 @@
 Everything you need to install, apply, customize and troubleshoot the Xscriptor
 cursor themes.
 
+> For a standalone, distribution-independent installation guide, see
+> [INSTALL.md](INSTALL.md). This manual covers the full workflow, customization
+> and troubleshooting.
+
 ## Contents
 
 1. [What this repository provides](#1-what-this-repository-provides)
@@ -22,13 +26,12 @@ Two original X11/Xcursor themes for Linux:
 
 | Theme | Look |
 |-------|------|
-| `Xscriptor-X` | Violet → blue → orange gradient body, gold rim, dark contour, X sparks |
-| `Xscriptor-Berlin` | Monochrome body, white rim, dark contour, X sparks |
+| `Xscriptor-X` | Full 16-colour palette gradient, gold rim, dark contour, X outside |
+| `Xscriptor-Berlin` | Monochrome body, white rim, dark contour, X outside |
 
 Both packs contain the same 78 cursor shapes and 101 standard aliases
-(179 entries per pack), in 10 nominal sizes from 16 to 96 px. The `wait` and
-`left_ptr_watch` cursors are animated: a skull opens and closes its jaw over
-12 frames at 70 ms per frame.
+(179 entries per pack), in 10 nominal sizes from 16 to 96 px. `wait` and
+`left_ptr_watch` use a static hourglass badge.
 
 The repository ships the full SVG sources and the Python pipeline that turns
 them into Xcursor binaries, so nothing has to be reverse-engineered later.
@@ -297,11 +300,10 @@ The theme includes these nominal sizes:
 The desktop picks the closest size to `XCURSOR_SIZE` or the compositor setting.
 24 px is a good default; 32 px suits high-density displays.
 
-### Animated cursors
+### Wait and watch cursors
 
-`wait` and `left_ptr_watch` are the only animated entries. They contain 12
-frames at 70 ms. The animation is part of the Xcursor file, so no extra daemon
-is required.
+`wait` and `left_ptr_watch` are static in the minimal family. The hourglass
+badge marks the busy state without an animation daemon or extra frames.
 
 ## 6. Customizing
 
@@ -401,7 +403,7 @@ creates them as relative symlinks inside the theme's `cursors/` directory.
 | `make generate` | Write SVG sources to `src/` |
 | `make build` | Render PNGs, write manifests, run `ctgen` |
 | `make install` | Build and copy both themes to `~/.local/share/icons` |
-| `make preview` | Full contact sheets in `preview/` and `docs/` |
+| `make preview` | Contact sheets and README previews in `preview/` |
 | `make validate` | Coverage, format, hotspot and animation checks |
 | `make clean` | Remove `build/` and `preview/` |
 
@@ -495,7 +497,6 @@ The validator checks:
 - every glyph from `X11/cursorfont.h`,
 - the Xcursor magic and image chunks,
 - that every hotspot is inside its bitmap,
-- that `wait` and `left_ptr_watch` really contain multiple frames,
 - that every theme has `index.theme`, `cursor.theme` and no broken symlinks.
 
 Run `make test-cli` to check the palette-spec parser and manifest contract
@@ -560,10 +561,10 @@ entry or as an alias to an existing cursor, then rebuild.
 
 ## 10. License and trademarks
 
-- Code (`scripts/`, `Makefile`): MIT. See [LICENSE](LICENSE).
-- Artwork (`src/`, generated cursors, `docs/` previews): CC BY 4.0. See
-  [LICENSE-ART](LICENSE-ART).
-- Names and logos: see [TRADEMARKS.md](TRADEMARKS.md).
+- Code (`scripts/`, `Makefile`): MIT. See [LICENSE](../LICENSE).
+- Artwork (`src/` and generated cursors): CC BY 4.0. See
+  [LICENSE-ART](../LICENSE-ART). Published previews live in the web repository.
+- Names and logos: see [TRADEMARKS.md](../TRADEMARKS.md).
 
 The cursor slot names (`left_ptr`, `watch`, `crosshair`, `X_cursor`, etc.) are
 functional identifiers from the X11/Xcursor conventions and are not claimed.

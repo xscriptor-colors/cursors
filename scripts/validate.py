@@ -4,8 +4,7 @@
 Checks:
   * every cursor name shipped by the system themes exists (no functional gap),
   * every entry is either a valid XCursor or a symlink that resolves,
-  * every image has a hotspot inside its bitmap,
-  * animated cursors really carry multiple frames.
+  * every image has a hotspot inside its bitmap.
 
 Run after building: python3 scripts/validate.py
 """
@@ -23,7 +22,6 @@ THEMES = {
 }
 SYSTEM_ICONS = Path("/usr/share/icons")
 METADATA = {".directory", "xcursorconfig"}
-ANIMATED = {"wait", "left_ptr_watch"}
 CURSORFONT = """
 arrow based_arrow_down based_arrow_up boat bogosity bottom_left_corner
 bottom_right_corner bottom_side bottom_tee box_spiral center_ptr circle clock
@@ -95,8 +93,6 @@ def check_theme(theme: str, path: Path, expected: set[str]) -> list[str]:
         sizes, frames, problems = parse_xcursor(entry)
         for problem in problems:
             issues.append(f"{entry.name}: {problem}")
-        if entry.name in ANIMATED and frames <= 1:
-            issues.append(f"{entry.name}: expected animation, got {frames} frame(s)")
         if len(sizes) < 5:
             issues.append(f"{entry.name}: only {len(sizes)} size(s)")
 

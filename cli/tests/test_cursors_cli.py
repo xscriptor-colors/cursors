@@ -110,7 +110,7 @@ class PaletteSpecTests(unittest.TestCase):
         self.assertIn(
             'x11_symlinks = ["arrow", "default", "top_left_arrow"]', text
         )
-        self.assertIn('png = "wait-*.png"', text)
+        self.assertIn('png = "wait.png"', text)
 
     def test_dry_run(self) -> None:
         spec = PaletteSpec.from_dict(BASE)

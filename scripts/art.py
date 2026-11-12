@@ -15,6 +15,8 @@ from __future__ import annotations
 import math
 from typing import Iterable
 
+import minimal
+
 PALETTES = {
     "x": {
         "stops": [
@@ -23,6 +25,24 @@ PALETTES = {
             ("52%", "#4d96ff"),
             ("76%", "#ff9f43"),
             ("100%", "#f59e0b"),
+        ],
+        "minimal_stops": [
+            ("0%", "#0a0a0a"),
+            ("6.67%", "#fc618d"),
+            ("13.33%", "#7bd88f"),
+            ("20%", "#fce566"),
+            ("26.67%", "#fd9353"),
+            ("33.33%", "#948ae3"),
+            ("40%", "#5ad4e6"),
+            ("46.67%", "#f7f1ff"),
+            ("53.33%", "#0f0f0f"),
+            ("60%", "#fc618d"),
+            ("66.67%", "#7bd88f"),
+            ("73.33%", "#fce566"),
+            ("80%", "#fd9353"),
+            ("86.67%", "#948ae3"),
+            ("93.33%", "#5ad4e6"),
+            ("100%", "#f7f1ff"),
         ],
         "rim": "#ffe884",
         "dark": "#171717",
@@ -38,16 +58,22 @@ DARK_W = 48
 RIM_W = 24
 
 
-def svg_document(body: str, pal: dict) -> str:
-    stops = "".join(
+def _gradient(gradient_id: str, stops: list[tuple[str, str]]) -> str:
+    values = "".join(
         f'<stop offset="{offset}" stop-color="{color}"/>'
-        for offset, color in pal["stops"]
+        for offset, color in stops
     )
+    return f'<linearGradient id="{gradient_id}" x1="0" y1="0" x2="1" y2="1">{values}</linearGradient>'
+
+
+def svg_document(body: str, pal: dict) -> str:
+    gradients = _gradient("g", pal["stops"])
+    if "url(#gm)" in body:
+        gradients += _gradient("gm", pal.get("minimal_stops", pal["stops"]))
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" '
         'viewBox="0 0 256 256">'
-        f'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">{stops}'
-        "</linearGradient></defs>"
+        f"<defs>{gradients}</defs>"
         f"{body}"
         "</svg>"
     )
@@ -608,6 +634,40 @@ def left_ptr_watch(pal: dict) -> list[str]:
 def wayland(pal: dict) -> str:
     return left_ptr(pal)
 
+
+
+
+# Minimal family overrides. The legacy geometry stays available for the cursor
+# slots that have not been redesigned yet.
+left_ptr = minimal.left_ptr
+right_ptr = minimal.right_ptr
+center_ptr = minimal.center_ptr
+up_arrow = minimal.up_arrow
+double_arrow = minimal.double_arrow
+move = minimal.move
+hand_point = minimal.hand_point
+hand_open = minimal.hand_open
+hand_fist = minimal.hand_fist
+xterm = minimal.xterm
+crosshair = minimal.crosshair
+cross = minimal.cross
+tcross = minimal.tcross
+x_cursor = minimal.x_cursor
+circle = minimal.circle
+crossed_circle = minimal.crossed_circle
+copy_cursor = minimal.copy_cursor
+link_cursor = minimal.link_cursor
+no_drop = minimal.no_drop
+question_arrow = minimal.question_arrow
+pencil = minimal.pencil
+plus_cursor = minimal.plus_cursor
+tee = minimal.tee
+corner_l = minimal.corner_l
+pointer_move = minimal.pointer_move
+context_menu = minimal.context_menu
+zoom = minimal.zoom
+wait = lambda pal: [minimal.wait(pal)]
+left_ptr_watch = lambda pal: [minimal.left_ptr_watch(pal)]
 
 # --------------------------------------------------------------------------
 # Legacy X11 cursorfont glyphs (original artwork for the old cursor slots)

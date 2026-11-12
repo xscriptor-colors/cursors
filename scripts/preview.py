@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "bitmaps"
 OUT = ROOT / "preview"
-DOCS = ROOT / "docs"
+DOCS = OUT / "docs"
 FEATURED = [
     "left_ptr", "right_ptr", "hand2", "grabbing",
     "xterm", "crosshair", "move", "question_arrow",
@@ -73,6 +73,10 @@ def sheet(pack: str, mode: str, files: list[Path]) -> Image.Image:
 
 def wait_sheet(pack: str) -> Image.Image:
     files = sorted((BUILD / pack).glob("wait-*.png"))
+    if not files:
+        static = BUILD / pack / "wait.png"
+        if static.exists():
+            files = [static]
     width = MARGIN * 2 + len(files) * 104
     height = 150
     img = Image.new("RGB", (width, height), BACKGROUNDS["dark"])

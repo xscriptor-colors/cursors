@@ -2,7 +2,7 @@
 
 <p align="center">
   Original X11/Xcursor themes for Linux, drawn from scratch in the Xscriptor palette:
-  a gradient body, a bright rim, a dark contour and small X marks around every glyph.
+  rounded minimal silhouettes, a bright rim, a dark contour and a small X mark outside the body.
 </p>
 
 <p align="center">
@@ -18,7 +18,8 @@
 
 <hr />
 
-> **New here?** Read the [manual](MANUAL.md) for platform-specific installation,
+> **New here?** Read the [installation guide](docs/INSTALL.md) for a
+> distribution-independent setup, or the [manual](docs/MANUAL.md) for
 > customization and troubleshooting.
 
 ## Preview
@@ -26,27 +27,26 @@
 ### Xscriptor-X
 
 <p align="center">
-  <img src="docs/preview-x-light.png" width="48%" alt="Xscriptor-X on a light background" />
-  <img src="docs/preview-x-dark.png" width="48%" alt="Xscriptor-X on a dark background" />
+  <img src="https://xscriptor-colors.github.io/web/images/cursors/preview-x-light.png" width="48%" alt="Xscriptor-X on a light background" />
+  <img src="https://xscriptor-colors.github.io/web/images/cursors/preview-x-dark.png" width="48%" alt="Xscriptor-X on a dark background" />
 </p>
 
 ### Xscriptor-Berlin
 
 <p align="center">
-  <img src="docs/preview-berlin-light.png" width="48%" alt="Xscriptor-Berlin on a light background" />
-  <img src="docs/preview-berlin-dark.png" width="48%" alt="Xscriptor-Berlin on a dark background" />
+  <img src="https://xscriptor-colors.github.io/web/images/cursors/preview-berlin-light.png" width="48%" alt="Xscriptor-Berlin on a light background" />
+  <img src="https://xscriptor-colors.github.io/web/images/cursors/preview-berlin-dark.png" width="48%" alt="Xscriptor-Berlin on a dark background" />
 </p>
 
 ## Packs
 
 | Pack | Look | Notes |
 |------|------|-------|
-| **Xscriptor-X** | Violet → blue → orange gradient, gold rim, dark contour, X sparks | Full-colour pack |
-| **Xscriptor-Berlin** | Monochrome, white rim, dark contour, X sparks | Works on light and dark desktops |
+| **Xscriptor-X** | Full 16-colour palette gradient, gold rim, dark contour, X outside | Full-colour pack |
+| **Xscriptor-Berlin** | Monochrome, white rim, dark contour, X outside | Works on light and dark desktops |
 
-Both packs share the same geometry and hotspots. The only animated cursors are
-`wait` and `left_ptr_watch`: a skull that opens and closes its jaw, 12 frames at
-70 ms per frame.
+Both packs share the same geometry and hotspots. `wait` and `left_ptr_watch`
+use a static hourglass badge in the minimal family.
 
 ## Coverage
 
@@ -61,7 +61,8 @@ Both packs share the same geometry and hotspots. The only animated cursors are
 
 | Token | Value |
 |-------|-------|
-| X gradient | `#4328a8` → `#7c3aed` → `#4d96ff` → `#ff9f43` → `#f59e0b` |
+| X minimal gradient | 16-color palette, `#0a0a0a` → … → `#f7f1ff` |
+| X legacy gradient | `#4328a8` → `#7c3aed` → `#4d96ff` → `#ff9f43` → `#f59e0b` |
 | X rim | `#ffe884` |
 | X contour | `#171717` |
 | Berlin gradient | `#0a0a0a` → `#4b4b55` |
@@ -70,8 +71,10 @@ Both packs share the same geometry and hotspots. The only animated cursors are
 
 ## Install
 
-For Hyprland, GNOME, KDE, Xfce, X11, GTK, Qt, Electron and Flatpak notes, see
-the [manual](MANUAL.md).
+For prebuilt and source installs, system-wide installation, and activation in
+Hyprland, GNOME, KDE, Xfce, X11, GTK, Qt, Electron and Flatpak, see the
+[installation guide](docs/INSTALL.md). For customization and troubleshooting,
+see the [manual](docs/MANUAL.md).
 
 ### Quick install
 
@@ -142,7 +145,7 @@ pip install -r scripts/requirements.txt
 make            # generate + build + validate + preview
 make install    # build and copy both themes to ~/.local/share/icons
 make validate   # coverage, Xcursor format and hotspot checks
-make preview    # full contact sheets in preview/ and docs/
+make preview    # contact sheets and README previews in preview/
 make clean      # remove build/ and preview/
 ```
 
@@ -190,10 +193,8 @@ cli/         palette-variant CLI (cursors-cli)
 scripts/     artwork, catalogue, generators and validation
 src/x/       Xscriptor-X SVG sources (generated, committed)
 src/berlin/  Xscriptor-Berlin SVG sources (generated, committed)
-docs/        preview images used by this README
-MANUAL.md    installation, usage, customization and troubleshooting guide
+docs/        INSTALL.md and MANUAL.md (installation, usage and troubleshooting)
 build/       generated PNGs, manifests and Xcursor themes (ignored)
-preview/     full contact sheets (ignored)
 Makefile     local pipeline
 ```
 
@@ -229,7 +230,7 @@ Makefile     local pipeline
 ## License
 
 - **Code** (`scripts/`, `Makefile`): MIT. See [LICENSE](LICENSE).
-- **Artwork** (`src/`, generated cursors, `docs/` previews): CC BY 4.0.
+- **Artwork** (`src/` and generated cursors): CC BY 4.0. Published previews live in the web repository.
   See [LICENSE-ART](LICENSE-ART).
 - **Trademarks**: see [TRADEMARKS.md](TRADEMARKS.md).
 

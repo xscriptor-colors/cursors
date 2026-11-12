@@ -42,20 +42,20 @@ class Cursor:
 CURSORS: tuple[Cursor, ...] = (
     Cursor(
         "left_ptr",
-        (40, 32),
+        (58, 52),
         one(art.left_ptr),
         ("arrow", "default", "top_left_arrow"),
     ),
     Cursor(
         "right_ptr",
-        (216, 32),
+        (198, 52),
         one(art.right_ptr),
         ("draft_large", "draft_small"),
     ),
     Cursor("center_ptr", (128, 44), one(art.center_ptr)),
     Cursor(
         "left_ptr_watch",
-        (40, 32),
+        (58, 52),
         art.left_ptr_watch,
         (
             "00000000000000020006000e7e9ffc3f",
@@ -68,7 +68,7 @@ CURSORS: tuple[Cursor, ...] = (
     Cursor("wait", (128, 128), art.wait, ("clock", "watch")),
     Cursor(
         "hand2",
-        (128, 42),
+        (126, 46),
         one(art.hand_point),
         (
             "9d800788f1b08800ae810202380a0822",
@@ -111,7 +111,7 @@ CURSORS: tuple[Cursor, ...] = (
     ),
     Cursor(
         "question_arrow",
-        (40, 32),
+        (58, 52),
         one(art.question_arrow),
         (
             "5c6cd98b3f3ebcb1f9c7f1c204630408",
@@ -130,7 +130,7 @@ CURSORS: tuple[Cursor, ...] = (
     Cursor("circle", (128, 128), one(art.circle), ("forbidden",)),
     Cursor(
         "copy",
-        (40, 32),
+        (58, 52),
         one(art.copy_cursor),
         (
             "1081e37283d90000800003c07f3ef6bf",
@@ -140,7 +140,7 @@ CURSORS: tuple[Cursor, ...] = (
     ),
     Cursor(
         "link",
-        (40, 32),
+        (58, 52),
         one(art.link_cursor),
         (
             "3085a0e285430894940527032f8b26df",
@@ -148,18 +148,18 @@ CURSORS: tuple[Cursor, ...] = (
             "a2a266d0498c3104214a47bd64ab0fc8",
         ),
     ),
-    Cursor("dnd-ask", (40, 32), one(art.question_arrow)),
-    Cursor("dnd-copy", (40, 32), one(art.copy_cursor)),
-    Cursor("dnd-link", (40, 32), one(art.link_cursor), ("alias",)),
+    Cursor("dnd-ask", (58, 52), one(art.question_arrow)),
+    Cursor("dnd-copy", (58, 52), one(art.copy_cursor)),
+    Cursor("dnd-link", (58, 52), one(art.link_cursor), ("alias",)),
     Cursor(
         "dnd_no_drop",
-        (40, 32),
+        (58, 52),
         one(art.no_drop),
         ("dnd-no-drop", "no-drop"),
     ),
-    Cursor("pointer-move", (40, 32), one(art.pointer_move)),
-    Cursor("context-menu", (40, 32), one(art.context_menu)),
-    Cursor("pencil", (128, 212), one(art.pencil), ("draft",)),
+    Cursor("pointer-move", (58, 52), one(art.pointer_move)),
+    Cursor("context-menu", (58, 52), one(art.context_menu)),
+    Cursor("pencil", (186, 186), one(art.pencil), ("draft",)),
     Cursor("plus", (128, 128), one(art.plus_cursor), ("cell",)),
     Cursor(
         "dotbox",
@@ -167,9 +167,9 @@ CURSORS: tuple[Cursor, ...] = (
         one(art.dotbox),
         ("dot_box_mask", "draped_box", "icon", "target"),
     ),
-    Cursor("zoom-in", (106, 106), one(lambda p: art.zoom(p, "+"))),
-    Cursor("zoom-out", (106, 106), one(lambda p: art.zoom(p, "-"))),
-    Cursor("wayland-cursor", (40, 32), one(art.wayland)),
+    Cursor("zoom-in", (118, 118), one(lambda p: art.zoom(p, "+"))),
+    Cursor("zoom-out", (118, 118), one(lambda p: art.zoom(p, "-"))),
+    Cursor("wayland-cursor", (58, 52), one(art.wayland)),
     Cursor(
         "sb_up_arrow",
         (128, 44),

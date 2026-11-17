@@ -60,6 +60,7 @@ pip install -r scripts/requirements.txt
 Install `rsvg-convert` from your distribution, for example:
 
 ```bash
+sudo xpm -S librsvg          # X Linux
 sudo pacman -S librsvg       # Arch
 sudo apt install librsvg2-bin # Debian/Ubuntu
 sudo dnf install librsvg2-tools # Fedora
